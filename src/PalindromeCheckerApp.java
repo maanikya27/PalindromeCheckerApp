@@ -1,27 +1,35 @@
-import java.util.LinkedList;
+/**
+ * MAIN CLASS - PalindromeCheckerApp
+ * This class validates a palindrome using recursion.
+ */
+public class PalindromeCheckerApp { // Class name now matches your file name
 
-void main() {
+    public static void main(String[] args) {
+        String input = "madam";
+        System.out.println("Input : " + input);
 
-    String input = "level";
-    System.out.println("Input : " + input);
+        // Call the recursive method
+        boolean isPalindrome = check(input, 0, input.length() - 1);
 
-
-    LinkedList<Character> list = new LinkedList<>();
-
-    for (char c : input.toCharArray()) {
-        list.add(c);
+        System.out.println("Is Palindrome? : " + isPalindrome);
     }
 
-    boolean isPalindrome = true;
-
-
-    while (list.size() > 1) {
-        if (!list.removeFirst().equals(list.removeLast())) {
-            isPalindrome = false;
-            break;
+    /**
+     * Recursively checks whether a string is a palindrome.
+     * Uses the Call Stack to manage method calls.
+     */
+    private static boolean check(String s, int start, int end) {
+        // Base Condition: stop when pointers cross
+        if (start >= end) {
+            return true;
         }
+
+        // Comparison logic
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
+        }
+
+        // Recursive call
+        return check(s, start + 1, end - 1);
     }
-
-
-    System.out.println("Is Palindrome? : " + isPalindrome);
 }
