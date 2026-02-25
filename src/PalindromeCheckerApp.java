@@ -1,35 +1,32 @@
 /**
- * MAIN CLASS - PalindromeCheckerApp
- * This class validates a palindrome using recursion.
+ * MAIN CLASS - UseCase10PalindromeCheckerApp
+ * Goal: Ignore spaces and case while checking a palindrome.
+ * Data Structure: String / Array.
  */
-public class PalindromeCheckerApp { // Class name now matches your file name
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
-        String input = "madam";
+        // 1. Define the input string with spaces and mixed case
+        String input = "A man a plan a canal Panama";
         System.out.println("Input : " + input);
 
-        // Call the recursive method
-        boolean isPalindrome = check(input, 0, input.length() - 1);
+        // 2. Normalize the string: remove non-alphanumeric characters and lowercase
+        // This is the "String preprocessing" step using Regular Expressions
+        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
+        // 3. Assume palindrome initially
+        boolean isPalindrome = true;
+
+        // 4. Compare symmetric characters from both ends
+        for (int i = 0; i < normalized.length() / 2; i++) {
+            // Compare characters at symmetric positions
+            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        // 5. Print the result
         System.out.println("Is Palindrome? : " + isPalindrome);
-    }
-
-    /**
-     * Recursively checks whether a string is a palindrome.
-     * Uses the Call Stack to manage method calls.
-     */
-    private static boolean check(String s, int start, int end) {
-        // Base Condition: stop when pointers cross
-        if (start >= end) {
-            return true;
-        }
-
-        // Comparison logic
-        if (s.charAt(start) != s.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call
-        return check(s, start + 1, end - 1);
     }
 }
