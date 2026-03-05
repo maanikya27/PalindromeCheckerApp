@@ -1,32 +1,72 @@
 /**
- * MAIN CLASS - UseCase10PalindromeCheckerApp
- * Goal: Ignore spaces and case while checking a palindrome.
- * Data Structure: String / Array.
+ * ==========================================================
+ * INTERFACE - PalindromeStrategy
+ * ==========================================================
  */
-public class PalindromeCheckerApp {
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-    public static void main(String[] args) {
-        // 1. Define the input string with spaces and mixed case
-        String input = "A man a plan a canal Panama";
-        System.out.println("Input : " + input);
-
-        // 2. Normalize the string: remove non-alphanumeric characters and lowercase
-        // This is the "String preprocessing" step using Regular Expressions
-        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
-
-        // 3. Assume palindrome initially
-        boolean isPalindrome = true;
-
-        // 4. Compare symmetric characters from both ends
-        for (int i = 0; i < normalized.length() / 2; i++) {
-            // Compare characters at symmetric positions
-            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
-            }
+/**
+ * ==========================================================
+ * CLASS - StackStrategy
+ * ==========================================================
+ */
+class StackStrategy implements PalindromeStrategy {
+    @Override
+    public boolean check(String input) {
+        if (input == null) return false;
+        java.util.Stack<Character> stack = new java.util.Stack<>();
+        for (char c : input.toCharArray()) {
+            stack.push(c);
         }
-
-        // 5. Print the result
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) return false;
+        }
+        return true;
     }
 }
+
+/**
+ * ==========================================================
+ * MAIN CLASS - UseCase13PalindromeCheckerApp
+ * ==========================================================
+ * Use Case 13: Performance Comparison
+ * * Description:
+ * This class measures and compares the execution
+ * performance of palindrome validation algorithms.
+ * * @author Developer
+ * @version 13.0
+ */
+public class UseCase13PalindromeCheckerApp {
+
+    /**
+     * Application entry point for UC13.
+     * @param args Command-line arguments
+     */
+    public static void main(String[] args) {
+        String input = "level";
+        PalindromeStrategy strategy = new StackStrategy();
+
+        // Capture execution start time
+        long startTime = System.nanoTime();
+
+        // Execute the algorithm
+        boolean isPalindrome = strategy.check(input);
+
+        // Capture execution end time
+        long endTime = System.nanoTime();
+
+        // Calculate total execution duration
+        long duration = endTime - startTime;
+
+        // Display benchmarking results
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
+        System.out.println("Execution Time : " + duration + " ns");
+    }
+}
+
+
+
+
